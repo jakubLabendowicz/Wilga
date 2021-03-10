@@ -20,7 +20,6 @@ class Theme {
   }
 }
 
-
 class ThemeSwitch {
   state = 0;
 
