@@ -44,11 +44,8 @@ class ThemeSwitch {
   schedulesCounter = 0;
   schedules = [];
 
-  constructor(name="", status="") {
-    this.name = name;
-    if (status!="") {
-      this.addStatus(status);
-    }
+  constructor() {
+
   }
 
   add(theme) {
