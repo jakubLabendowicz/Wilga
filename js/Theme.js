@@ -29,7 +29,7 @@ class Theme {
   }
 }
 
-class ThemeSwitch {
+class ThemeController {
   state = 0;
 
   themesCounter = 0;
