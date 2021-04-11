@@ -38,6 +38,9 @@ class ThemeSwitch {
   statusesCounter = 0;
   statuses = [];
 
+  buttonsCounter = 0;
+  buttons = [];
+
   schedulesCounter = 0;
   schedules = [];
 
@@ -73,6 +76,12 @@ class ThemeSwitch {
     for (var i = 0; i < this.statusesCounter; i++) {
       document.getElementById(this.statuses[i]).innerHTML = this.themes[this.state].name;
     }
+  }
+
+  addButton(id) {
+    this.buttons.push(id);
+    this.buttonsCounter++;
+    document.getElementById(id).addEventListener('click',function () {this.show()});
   }
 
   addSchedule(id, start, end) {
