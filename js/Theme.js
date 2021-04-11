@@ -56,7 +56,7 @@ class ThemeController {
   addButton(id) {
     this.buttons.push(id);
     this.buttonsCounter++;
-    document.getElementById(id).addEventListener('click',function () {this.show()});
+    document.getElementById(id).addEventListener('click', function () {themeController.show()});
   }
 
   addStatus(id) {
