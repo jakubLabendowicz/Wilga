@@ -56,6 +56,23 @@ class ThemeSwitch {
     this.themesCounter++;
   }
 
+  addButton(id) {
+    this.buttons.push(id);
+    this.buttonsCounter++;
+    document.getElementById(id).addEventListener('click',function () {this.show()});
+  }
+
+  addStatus(id) {
+    this.statuses.push(id);
+    this.statusesCounter++;
+  }
+
+  addSchedule(id, start, end) {
+    this.schedules[this.schedulesCounter] = [id, start, end];
+    this.schedulesCounter++;
+    this.showSchedule();
+  }
+
   show(state=-1) {
     if (state==-1) {
       this.state++;
@@ -64,30 +81,11 @@ class ThemeSwitch {
       this.state=state;
     }
     this.themes[this.state].set();
-    this.showStatus();
-  }
 
-  addStatus(id) {
-    this.statuses.push(id);
-    this.statusesCounter++;
-  }
-
-  showStatus() {
+    //showStatus
     for (var i = 0; i < this.statusesCounter; i++) {
       document.getElementById(this.statuses[i]).innerHTML = this.themes[this.state].name;
     }
-  }
-
-  addButton(id) {
-    this.buttons.push(id);
-    this.buttonsCounter++;
-    document.getElementById(id).addEventListener('click',function () {this.show()});
-  }
-
-  addSchedule(id, start, end) {
-    this.schedules[this.schedulesCounter] = [id, start, end];
-    this.schedulesCounter++;
-    this.showSchedule();
   }
 
   showSchedule() {
