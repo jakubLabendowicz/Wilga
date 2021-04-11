@@ -57,6 +57,9 @@ class ThemeSwitch {
 
   addStatus(id) {
     this.statuses.push(id);
+    //tutaj
+    document.getElementById(statuses[statusesCounter]).onclick = this.show();
+    //do tutaj
     this.statusesCounter++;
   }
 
