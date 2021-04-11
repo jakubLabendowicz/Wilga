@@ -51,7 +51,6 @@ class ThemeSwitch {
     } else {
       this.state=state;
     }
-    console.log(state);
     this.themes[this.state].set();
     this.showStatus();
   }
