@@ -8,9 +8,18 @@ class Theme {
   }
 
   add(variable, value) {
-    this.variables.push(variable);
-    this.values.push(value);
-    this.counter++;
+    var permission = true;
+    for (var i = 0; i < this.counter; i++) {
+      if (this.variables[i] == variable) {
+        this.values[i] = value;
+        permission = false;
+      }
+    }
+    if (permission == true) {
+      this.variables.push(variable);
+      this.values.push(value);
+      this.counter++;
+    }
   }
 
   set() {
