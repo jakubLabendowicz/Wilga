@@ -1,4 +1,4 @@
-import Storage from 'Storage.js';
+import Storage from './Storage.js';
 
 export default class Theme {
   counter = 0;
