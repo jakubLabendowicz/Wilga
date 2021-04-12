@@ -27,5 +27,3 @@ class Storage {
 
   }
 }
-
-export {Storage}

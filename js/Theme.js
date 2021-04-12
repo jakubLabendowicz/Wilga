@@ -104,5 +104,3 @@ class ThemeController {
     }
   }
 }
-
-export {Theme, ThemeController}
