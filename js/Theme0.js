@@ -1,3 +1,5 @@
+import Storage from 'Storage.js';
+
 export default class Theme {
   counter = 0;
   variables = [];
@@ -44,8 +46,8 @@ export default class ThemeController {
   schedulesCounter = 0;
   schedules = [];
 
-  constructor() {
-
+  constructor(name="") {
+    this.name = name;
   }
 
   add(theme) {
@@ -70,18 +72,29 @@ export default class ThemeController {
     this.showSchedule();
   }
 
-  show(state=-1) {
+  toogle(state=-1) {
     if (state==-1) {
       this.state++;
       if (this.state==this.themesCounter) this.state=0;
     } else {
       this.state=state;
     }
-    this.themes[this.state].set();
+
+    var storage = new Storage(this.name);
+    storage.uploadSessionStorage(state);
+
+    this.show();
+  }
+
+  show() {
+    var storage = new Storage(this.name);
+    var state = storage.downloadSessionStorage();
+
+    this.themes[state].set();
 
     //showStatus
     for (var i = 0; i < this.statusesCounter; i++) {
-      document.getElementById(this.statuses[i]).innerHTML = this.themes[this.state].name;
+      document.getElementById(this.statuses[i]).innerHTML = this.themes[state].name;
     }
   }
 
