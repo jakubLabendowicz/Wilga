@@ -1,4 +1,4 @@
-export default class Theme {
+export class Theme {
   counter = 0;
   variables = [];
   values = [];
