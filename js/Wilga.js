@@ -8,7 +8,7 @@ class Storage {
   }
 
   downloadLocalStorage() {
-    return localStorage.tItem(this.keyName);
+    return localStorage.getItem(this.keyName);
   }
 
   uploadSessionStorage(keyValue) {
@@ -16,7 +16,7 @@ class Storage {
   }
 
   downloadSessionStorage() {
-    return sessionStorage.tItem(this.keyName);
+    return sessionStorage.getItem(this.keyName);
   }
 
   static arrayToJson(array) {
@@ -78,6 +78,7 @@ class ThemeController {
     this.name = name;
   }
 
+  //--------------------ADD--------------------//
   add(theme) {
     this.themes.push(theme);
     this.themesCounter++;
@@ -86,7 +87,7 @@ class ThemeController {
   addButton(id) {
     this.buttons.push(id);
     this.buttonsCounter++;
-    document.getElementById(id).addEventListener('click', function () {themeController.show()});
+    document.getElementById(id).addEventListener('click', function () {themeController.toogle()});
   }
 
   addStatus(id) {
@@ -97,7 +98,50 @@ class ThemeController {
   addSchedule(id, start, end) {
     this.schedules[this.schedulesCounter] = [id, start, end];
     this.schedulesCounter++;
-    this.showSchedule();
+    this.toogleSchedule();
+  }
+
+  //--------------------CYKL ŻYCIA--------------------//
+  //1. firstLoad() - automatyczne
+  //2. toogleSchedule() - można ręcznie
+  //3. sessionLoad() - automatyczne
+  //4. toogle() - można ręcznie
+  //5. themeLoad() - automatyczne
+
+  //--------------------!!!--------------------//
+  firstLoad() {
+    //TODO: Jeżeli localStorage jest pusty to
+    //        ustawić harmonogram w localStorage z pomocą toogleSchedule()
+    this.toogleSchedule();
+  }
+
+  toogleSchedule() {
+    var storage = new Storage(this.name);
+    storage.uploadLocalStorage(this.schedules);
+
+    this.sessionLoad();
+  }
+
+  sessionLoad() {
+    // TODO: Jeżeli sessionStorage jest pusty to pobrać dane z localStorage
+    //        i ustawić stan motywu w sessionStorage z pomocą toogle(wartosc),
+    //        gdzie wartosc jest ustalana na podstawie pobranego z localStorage harmonogramu!
+    const date = new Date();
+    var hour = date.getHours();
+    var minute = date.getMinutes();
+    var time = hour + minute*0.01;
+
+    for (var i = 0; i < this.schedulesCounter; i++) {
+      if (this.schedules[i][1]<this.schedules[i][2]) {
+        if (this.schedules[i][1]<=time && this.schedules[i][2]>=time) {
+          this.toogle(this.schedules[i][0]);
+        }
+      } else if (this.schedules[i][1]>this.schedules[i][2]) {
+        if (this.schedules[i][1]<=time || this.schedules[i][2]>=time) {
+          this.toogle(this.schedules[i][0]);
+        }
+      }
+    }
   }
 
   toogle(state=-1) {
@@ -109,39 +153,21 @@ class ThemeController {
     }
 
     var storage = new Storage(this.name);
-    storage.uploadSessionStorage(state);
+    storage.uploadSessionStorage(this.state);
 
-    this.show();
+    this.themeLoad();
   }
 
-  show() {
+  themeLoad() {
     var storage = new Storage(this.name);
     var state = storage.downloadSessionStorage();
+    this.state=state;
 
     this.themes[state].set();
 
     //showStatus
     for (var i = 0; i < this.statusesCounter; i++) {
       document.getElementById(this.statuses[i]).innerHTML = this.themes[state].name;
-    }
-  }
-
-  showSchedule() {
-    const date = new Date();
-    var hour = date.getHours();
-    var minute = date.getMinutes();
-    var time = hour + minute*0.01;
-
-    for (var i = 0; i < this.schedulesCounter; i++) {
-      if (this.schedules[i][1]<this.schedules[i][2]) {
-        if (this.schedules[i][1]<=time && this.schedules[i][2]>=time) {
-          this.show(this.schedules[i][0]);
-        }
-      } else if (this.schedules[i][1]>this.schedules[i][2]) {
-        if (this.schedules[i][1]<=time || this.schedules[i][2]>=time) {
-          this.show(this.schedules[i][0]);
-        }
-      }
     }
   }
 }
