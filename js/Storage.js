@@ -1,4 +1,4 @@
-export class Storage {
+class Storage {
   constructor(keyName) {
     this.keyName = keyName;
   }
@@ -27,3 +27,5 @@ export class Storage {
 
   }
 }
+
+export {Storage}

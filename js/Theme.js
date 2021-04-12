@@ -1,4 +1,4 @@
-export class Theme {
+class Theme {
   counter = 0;
   variables = [];
   values = [];
@@ -29,7 +29,7 @@ export class Theme {
   }
 }
 
-export default class ThemeController {
+class ThemeController {
   state = 0;
 
   themesCounter = 0;
@@ -104,3 +104,5 @@ export default class ThemeController {
     }
   }
 }
+
+export {Theme, ThemeController}
