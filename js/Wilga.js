@@ -28,9 +28,6 @@ class Storage {
   }
 }
 
-
-import Storage from './Storage.js';
-
 class Theme {
   counter = 0;
   variables = [];
