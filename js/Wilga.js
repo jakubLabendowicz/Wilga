@@ -144,11 +144,11 @@ class ThemeController {
     }
   }
 
-  toogle(state=-1) {
-    if (state==-1) {
+  toogle(state=-101, run=true) {
+    if (state==-101 && run==true) {
       this.state++;
       if (this.state==this.themesCounter) this.state=0;
-    } else {
+    } else if(state>=0 && run==true) {
       this.state=state;
     }
 
