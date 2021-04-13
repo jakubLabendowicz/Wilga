@@ -12,7 +12,7 @@ class Storage {
   }
 
   synchronizeLocal() {
-    localStorage.setItem(this.keyName, this.downloadSession());
+    this.uploadLocal(this.downloadSession());
   }
 
   uploadSession(keyValue) {
@@ -24,6 +24,6 @@ class Storage {
   }
 
   synchronizeSession() {
-    sessionStorage.setItem(this.keyName, this.downloadLocal());
+    this.uploadSession(this.downloadLocal());
   }
 }
