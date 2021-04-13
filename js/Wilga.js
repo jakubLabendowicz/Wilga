@@ -8,7 +8,7 @@ class Storage {
   }
 
   downloadLocal() {
-    return localStorage.tItem(this.keyName);
+    return localStorage.getItem(this.keyName);
   }
 
   synchronizeLocal() {
@@ -20,13 +20,14 @@ class Storage {
   }
 
   downloadSession() {
-    return sessionStorage.tItem(this.keyName);
+    return sessionStorage.getItem(this.keyName);
   }
 
   synchronizeSession() {
     this.uploadSession(this.downloadLocal());
   }
 }
+
 
 
 
