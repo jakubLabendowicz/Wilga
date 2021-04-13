@@ -152,15 +152,15 @@ class ThemeController {
       this.state=state;
     }
 
-    var storage = new Storage(this.name);
-    storage.uploadSessionStorage(this.state);
+    var storage = new Storage(this.name + "_state");
+    storage.uploadLocalStorage(this.state);
 
     this.themeLoad();
   }
 
   themeLoad() {
-    var storage = new Storage(this.name);
-    var state = storage.downloadSessionStorage();
+    var storage = new Storage(this.name + "_state");
+    var state = storage.downloadLocalStorage();
     this.state=state;
 
     this.themes[state].set();
