@@ -3,30 +3,31 @@ class Storage {
     this.keyName = keyName;
   }
 
-  uploadLocalStorage(keyValue) {
+  uploadLocal(keyValue) {
     localStorage.setItem(this.keyName, keyValue);
   }
 
-  downloadLocalStorage() {
-    return localStorage.getItem(this.keyName);
+  downloadLocal() {
+    return localStorage.tItem(this.keyName);
   }
 
-  uploadSessionStorage(keyValue) {
+  synchronizeLocal() {
+    localStorage.setItem(this.keyName, this.downloadSession());
+  }
+
+  uploadSession(keyValue) {
     sessionStorage.setItem(this.keyName, keyValue);
   }
 
-  downloadSessionStorage() {
-    return sessionStorage.getItem(this.keyName);
+  downloadSession() {
+    return sessionStorage.tItem(this.keyName);
   }
 
-  static arrayToJson(array) {
-
-  }
-
-  static jsonToArray(json) {
-
+  synchronizeSession() {
+    sessionStorage.setItem(this.keyName, this.downloadLocal());
   }
 }
+
 
 class Theme {
   counter = 0;
@@ -95,10 +96,86 @@ class ThemeController {
     this.statusesCounter++;
   }
 
-  addSchedule(id, start, end) {
+  addSchedule(id, start=0.00, end=23.59) {
     this.schedules[this.schedulesCounter] = [id, start, end];
     this.schedulesCounter++;
     this.toogleSchedule();
+  }
+
+
+
+
+
+  synchronizeDefaultTheme() { //podczas pierwszego ładowania strony w przeglądarce
+    //...
+
+
+    //uploadDefaultTheme
+    var storage = new Storage(this.name);
+    storage.uploadLocal(this.state);
+  }
+
+  toogleDefaultTheme() {
+    //...
+
+
+    //uploadDefaultTheme
+    var storage = new Storage(this.name);
+    storage.uploadLocal(this.state);
+
+    //synchronizacja strony z sesją
+    this.synchronizeSessionTheme();
+  }
+
+  synchronizeSessionTheme() { //podczas pierwszego ładowania strony w sesji
+    //downloadDefaultTheme
+    var storage = new Storage(this.name);
+    var state = storage.downloadLocal();
+
+    //...
+
+    //uploadSessionTheme
+    var storage = new Storage(this.name);
+    storage.uploadSession(this.state);
+  }
+
+  toogleSessionTheme(state=-101, run=true) {
+    if (state==-101 && run==true) {
+      this.state++;
+      if (this.state==this.themesCounter) this.state=0;
+    } else if(state>=0 && run==true) {
+      this.state=state;
+    }
+
+    //uploadSessionTheme
+    var storage = new Storage(this.name);
+    storage.uploadSession(this.state);
+
+    //synchronizacja strony z sesją
+    this.synchronizePageTheme();
+  }
+
+  synchronizePageTheme() { //podczas ładowania strony
+    //downloadSessionTheme
+    var storage = new Storage(this.name);
+    var state = storage.downloadSession();
+
+    this.state = state;
+    this.themes[this.state].set();
+
+    //showStatus
+    for (var i = 0; i < this.statusesCounter; i++) {
+      document.getElementById(this.statuses[i]).innerHTML = this.themes[this.state].name;
+    }
+  }
+
+  synchronize() {
+    //TODO: sprawdzenie czy pierwsze ładowanie strony w przeglądarce
+    this.synchronizeDefaultTheme();
+    //TODO: sprawdzenie czy pierwsze ładowanie strony w sesji
+    this.synchronizeSessionTheme();
+
+    this.synchronizePageTheme();
   }
 
   //--------------------CYKL ŻYCIA--------------------//
@@ -117,7 +194,7 @@ class ThemeController {
 
   toogleSchedule() {
     var storage = new Storage(this.name);
-    storage.uploadLocalStorage(this.schedules);
+    storage.uploadLocal(this.schedules);
 
     this.sessionLoad();
   }
@@ -144,7 +221,7 @@ class ThemeController {
     }
   }
 
-  toogle(state=-101, run=true) {
+  toogle(state=-101, run=true) { //like toogleSessionTheme
     if (state==-101 && run==true) {
       this.state++;
       if (this.state==this.themesCounter) this.state=0;
@@ -153,14 +230,14 @@ class ThemeController {
     }
 
     var storage = new Storage(this.name + "_state");
-    storage.uploadLocalStorage(this.state);
+    storage.uploadLocal(this.state);
 
     this.themeLoad();
   }
 
-  themeLoad() {
+  themeLoad() { //like synchronizePageTheme
     var storage = new Storage(this.name + "_state");
-    var state = storage.downloadLocalStorage();
+    var state = storage.downloadLocal();
     this.state=state;
 
     this.themes[state].set();
