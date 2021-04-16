@@ -1,24 +1,46 @@
 # Wilga
 
 ```javascript
-var light = new Theme("Jasny");
-light.add("--firstBackgroundColor", "white");
-light.add("--firstColor", "black");
-light.add("--shadowColor", "#DDDDDD");
+var light = new Theme("Light");
+light.add("--bodyColor", "black");
+light.add("--bodyBackgroundColor", "white");
+light.add("--panelColor", "black");
+light.add("--panelBackgroundColor", "#ffffffcc");
+light.add("--barColor", "black");
+light.add("--barBackgroundColor", "#00000000");
+light.add("--barIconColor", "black");
+light.add("--barIconBackgroundColor", "#efefef");
 
-var dark = new Theme("Ciemny");
-dark.add("--firstBackgroundColor", "#111111");
-dark.add("--firstColor", "white");
-dark.add("--shadowColor", "black");
+var dimmed = new Theme("Dimmed");
+dimmed.add("--bodyColor", "white");
+dimmed.add("--bodyBackgroundColor", "#212121");
+dimmed.add("--panelColor", "white");
+dimmed.add("--panelBackgroundColor", "#212121cc");
+dimmed.add("--barColor", "black");
+dimmed.add("--barBackgroundColor", "#00000000");
+dimmed.add("--barIconColor", "black");
+dimmed.add("--barIconBackgroundColor", "#efefef");
 
-var themeSwitch = new ThemeSwitch("Switch");
-themeSwitch.add(light);
-themeSwitch.add(dark);
+var dark = new Theme("Dark");
+dark.add("--bodyColor", "white");
+dark.add("--bodyBackgroundColor", "black");
+dark.add("--panelColor", "white");
+dark.add("--panelBackgroundColor", "#000000cc");
+dark.add("--barColor", "white");
+dark.add("--barBackgroundColor", "#00000000");
+dark.add("--barIconColor", "white");
+dark.add("--barIconBackgroundColor", "#212121");
 
-themeSwitch.addStatus("themeStatus");
+var themeController = new ThemeController("themeController");
+themeController.addTheme(light);
+themeController.addTheme(dimmed);
+themeController.addTheme(dark);
 
-themeSwitch.addSchedule(0, 8.00, 19.59);
-themeSwitch.addSchedule(1, 20.00, 7.59);
+themeController.addButton("themebutton");
+// themeController.addButton("themebutton2");
+themeController.addStatus("themebutton");
 
-document.getElementById("themeStatus").addEventListener('click',function () {themeSwitch.show()});
+document.getElementById("defaultThemeSetter2").addEventListener('click',function () {themeController.synchronizeLocalTheme()});
+
+themeController.run();
 ```
