@@ -46,8 +46,10 @@ themeController.addTheme(dark);
 themeController.addButton("themebutton");
 themeController.addStatus("themebutton");
 
-//themeController.addStatus("themebutton", name);
-//themeController.addStatus("themebutton", icon);
+themeController.addButton("themebutton", "sessionThemeToogle");
+themeController.addButton("themebutton", "localThemeSynchronizer");
+//themeController.addStatus("themebutton", "name");
+//themeController.addStatus("themebutton", "icon");
 
 document.getElementById("defaultThemeSetter").addEventListener('click',function () {themeController.synchronizeLocalTheme()});
 
