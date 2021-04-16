@@ -49,7 +49,7 @@ themeController.addStatus("themebutton");
 //themeController.addStatus("themebutton", name);
 //themeController.addStatus("themebutton", icon);
 
-document.getElementById("defaultThemeSetter2").addEventListener('click',function () {themeController.synchronizeLocalTheme()});
+document.getElementById("defaultThemeSetter").addEventListener('click',function () {themeController.synchronizeLocalTheme()});
 
 themeController.run();
 ```
