@@ -46,8 +46,8 @@ themeController.addTheme(dark);
 themeController.addButton("themebutton");
 themeController.addStatus("themebutton");
 
-themeController.addButton("themebutton", "sessionThemeToogle");
-themeController.addButton("themebutton", "localThemeSynchronizer");
+//themeController.addButton("themebutton", "sessionThemeToogle");
+//themeController.addButton("defaultThemeSetter", "localThemeSynchronizer");
 //themeController.addStatus("themebutton", "name");
 //themeController.addStatus("themebutton", "icon");
 
