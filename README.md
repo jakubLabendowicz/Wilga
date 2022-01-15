@@ -1,5 +1,3 @@
-# Wilga Design System
-
 ```javascript
 var light = new Theme("Light");
 //light.addName("Light");
